@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "55827425797",
+    "firebase_url": "https://simpleblog-1871d.firebaseio.com",
+    "project_id": "simpleblog-1871d",
+    "storage_bucket": "simpleblog-1871d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:55827425797:android:8b5e8d7d51e9e59f",
+        "android_client_info": {
+          "package_name": "com.optic.simpleblog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "55827425797-fkj2r9lcvrap53fempi9np8la3tiiq4u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw4Afsb2N8UvVejww7CXcTkbKXd3REAZM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
