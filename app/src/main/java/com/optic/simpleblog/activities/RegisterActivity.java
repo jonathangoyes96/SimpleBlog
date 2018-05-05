@@ -1,4 +1,4 @@
-package com.optic.simpleblog;
+package com.optic.simpleblog.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.optic.simpleblog.R;
 
 public class RegisterActivity extends AppCompatActivity {
 

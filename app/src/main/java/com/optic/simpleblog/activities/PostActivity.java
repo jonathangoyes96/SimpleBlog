@@ -1,11 +1,9 @@
-package com.optic.simpleblog;
+package com.optic.simpleblog.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,15 +27,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.optic.simpleblog.R;
 import com.optic.simpleblog.utils.CompressorBitmapImage;
 import com.optic.simpleblog.utils.FileUtil;
 import com.optic.simpleblog.utils.RandomName;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-
-import id.zelory.compressor.Compressor;
 
 public class PostActivity extends AppCompatActivity {
 
