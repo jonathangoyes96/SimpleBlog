@@ -3,6 +3,7 @@ package com.optic.simpleblog.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,9 +21,9 @@ import com.optic.simpleblog.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText editTextName;
-    private EditText editTextEmail;
-    private EditText editTextPassword;
+    private TextInputEditText editTextName;
+    private TextInputEditText editTextEmail;
+    private TextInputEditText editTextPassword;
     private Button btnRegister;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
@@ -40,9 +41,9 @@ public class RegisterActivity extends AppCompatActivity {
         // Creando otro nodo llamado Users en la base de datos de firebase donde se almacenaran tambien los datos del usuario tales como nombre y su imagen
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        editTextName = (EditText) findViewById(R.id.editTextNameRegister);
-        editTextEmail = (EditText) findViewById(R.id.editTextEmailRegister);
-        editTextPassword = (EditText) findViewById(R.id.editTextPasswordRegister);
+        editTextName = (TextInputEditText) findViewById(R.id.editTextNameRegister);
+        editTextEmail = (TextInputEditText) findViewById(R.id.editTextEmailRegister);
+        editTextPassword = (TextInputEditText) findViewById(R.id.editTextPasswordRegister);
         btnRegister = (Button) findViewById(R.id.btnRegister);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -59,11 +60,11 @@ public class RegisterActivity extends AppCompatActivity {
     private void registerUserInFirebase() {
 
         final String name = editTextName.getText().toString().trim();
-        String email = editTextEmail.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
         if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-            progressDialog.setMessage("Signing up...");
+            progressDialog.setMessage("Registrando...");
             progressDialog.show();
 
             firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -77,6 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                         DatabaseReference current_user_db = databaseReference.child(user_id);
                         // Seteando los valores que tendran los usuarios su nombre e imagen
                         current_user_db.child("name").setValue(name);
+                        current_user_db.child("email").setValue(email);
                         current_user_db.child("image").setValue("default");
                         current_user_db.child("thumb_image").setValue("default");
 

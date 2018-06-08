@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0488D1</color>
-    <color name="colorPrimaryDark">#0477bd</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#FFEB3B</color>
+    <color name="colorPrimaryDark">#FBC02D</color>
+    <color name="colorAccent">#FF5252</color>
     <color name="grayColor">#c2c2c2</color>
+    <color name="colorDarkBlue">#202631</color>
+    <color name="colorGreen">#26e119</color>
+    <color name="colorLightGreen">#1fda6d</color>
+    <color name="colorDarkGreen">#1ab259</color>
+    <color name="colorRed">#dd2b3d</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGray">#b6b6b6</color>
+    <color name="colorLightGray">#ececec</color>
+    <color name="colorDarkGray">#8f8f8f</color>
+    <color name="colorHint">#c1c0c0</color>
+    <color name="colorTransparentDark">#80050505</color>
+    <color name="colorBrown">#372322</color>
+    <color name="colorLightBrown">#452f2e</color>
+    <color name="colorCyan">#12c1e4</color>
+    <color name="colorBlue">#243c5c</color>
+    <color name="colorLightBlue">#328fd1</color>
+    <color name="editTextColorWhite">#ffffff</color>
+    <color name="colorBlueImage">#1074d3</color>
+    <color name="colorMaterialBlue">#2962ff</color>
+    <color name="colorBlueSky">#2cb6f5</color>
+    <color name="colorDivider">#BDBDBD</color>
+    <color name="colorTextPrimary">#212121</color>
 </resources>

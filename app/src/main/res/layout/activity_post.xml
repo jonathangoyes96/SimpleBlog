@@ -7,9 +7,13 @@
     android:fitsSystemWindows="true"
     tools:context="com.optic.simpleblog.activities.PostActivity">
 
+    <include layout="@layout/action_bar_toolbar" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:orientation="vertical">
 
         <ImageButton
@@ -18,19 +22,20 @@
             android:layout_height="210dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            app:srcCompat="@mipmap/add_btn"
+            android:background="@color/colorDarkBlue"
+            app:srcCompat="@drawable/icon_upload_image"
             />
 
         <EditText
             android:id="@+id/editTextTitlePost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Post Title..."
+            android:hint="@string/title_post_text"
             android:background="@drawable/input_outline"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:inputType="textPersonName"
+            android:inputType="textMultiLine"
             android:padding="15dp"
             />
 
@@ -38,7 +43,7 @@
             android:id="@+id/editTextDescriptionPost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Post Description..."
+            android:hint="@string/post_description_text"
             android:inputType="textMultiLine"
             android:background="@drawable/input_outline"
             android:padding="15dp"
@@ -56,9 +61,9 @@
                 android:id="@+id/btnSubmitPost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:text="Submit Post"
-                android:textColor="@android:color/white"
+                android:background="@color/colorPrimaryDark"
+                android:text="@string/upload_post_text"
+                android:textColor="@android:color/black"
                 />
 
         </RelativeLayout>

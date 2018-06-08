@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="create_account_text">Create account</string>
+    <string name="description_app_text">Have fun with people who have your same tastes sharing post of your favorite video games</string>
+    <string name="have_account_text">I Have account</string>
+    <string name="share_with_friends_text">Share with your friend</string>
+    <string name="password_text">Password</string>
+    <string name="email_text">Email</string>
+    <string name="edit_profile_text">Edit Profile</string>
+    <string name="like_text">Likes</string>
+    <string name="by_text">By: </string>
+    <string name="name_user_text">Username</string>
+    <string name="profile_text">Profile</string>
+    <string name="home_text">Home</string>
+    <string name="title_post_text">Title post</string>
+    <string name="upload_post_text">Upload post</string>
+    <string name="post_description_text">Description</string>
+    <string name="new_post_text">New post</string>
+    <string name="comments_text">COMMENTS</string>
+    <string name="publish_text">Publish</string>
+    <string name="posting_text">Posting</string>
+    <string name="edit_post_text">Edit post</string>
+    <string name="editing_post_text">Uploading post...</string>
+    <string name="posting_blog_text">Publish post...</string>
+    <string name="verificating_login_text">Checking data...</string>
+    <string name="logout_text">Logout</string>
+</resources>

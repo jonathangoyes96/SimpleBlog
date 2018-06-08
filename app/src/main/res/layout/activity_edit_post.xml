@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".activities.EditPostActivity">
+
+    <include layout="@layout/action_bar_toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/imageButtonEditPost"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:background="@color/colorDarkBlue"
+            app:srcCompat="@drawable/icon_upload_image"
+            />
+
+        <EditText
+            android:id="@+id/editTextTitleEditPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/title_post_text"
+            android:background="@drawable/input_outline"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:inputType="textMultiLine"
+            android:padding="15dp"
+            />
+
+        <EditText
+            android:id="@+id/editTextDescriptionEditPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/post_description_text"
+            android:inputType="textMultiLine"
+            android:background="@drawable/input_outline"
+            android:padding="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom">
+
+            <Button
+                android:id="@+id/btnEditPost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:text="@string/edit_post_text"
+                android:textColor="@android:color/black"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+</android.support.design.widget.CoordinatorLayout>

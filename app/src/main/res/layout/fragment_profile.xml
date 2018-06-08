@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activities.fragments.ProfileFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageProfile"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/image_user"
+            app:civ_border_color="@color/colorGray"
+            app:civ_border_width="1dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/textViewNameProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="JONATHAN"
+            android:textSize="20sp"
+            android:textColor="@color/colorDarkBlue"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/textViewEmailProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="jonathan@gmail.com"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom">
+
+            <Button
+                android:id="@+id/btnGoToEditProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/RaisedButtonYellow"
+                android:text="@string/edit_profile_text"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+</android.support.design.widget.CoordinatorLayout>

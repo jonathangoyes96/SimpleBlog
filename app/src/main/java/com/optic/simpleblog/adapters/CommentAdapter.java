@@ -1,4 +1,4 @@
-package com.optic.simpleblog.Adapter;
+package com.optic.simpleblog.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -78,10 +78,15 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Comments
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("name").getValue().toString();
-                String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
-
                 viewHolder.textViewUsername.setText(name);
-                Picasso.with(viewHolder.circleImageProfile.getContext()).load(thumb_image).placeholder(R.drawable.profile_default_male).into(viewHolder.circleImageProfile);
+
+
+                if(dataSnapshot.hasChild("thumb_image")) {
+                    String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
+                    Picasso.with(viewHolder.circleImageProfile.getContext()).load(thumb_image).placeholder(R.drawable.profile_default_male).into(viewHolder.circleImageProfile);
+                }
+
+
             }
 
             @Override

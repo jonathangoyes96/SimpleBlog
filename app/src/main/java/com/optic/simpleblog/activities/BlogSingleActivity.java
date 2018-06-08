@@ -35,7 +35,7 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.optic.simpleblog.Adapter.CommentAdapter;
+import com.optic.simpleblog.adapters.CommentAdapter;
 import com.optic.simpleblog.R;
 import com.optic.simpleblog.model.Comments;
 import com.squareup.picasso.Picasso;
@@ -47,7 +47,7 @@ import java.util.List;
 public class BlogSingleActivity extends AppCompatActivity {
 
     // POST KEY ENVIADO DESDE MainActivity
-    private String post_key = null;
+    private String post_key;
 
     // FIREBASE
     private ImageView imageViewSingleBlog;
@@ -55,6 +55,7 @@ public class BlogSingleActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseComments;
     private FirebaseAuth firebaseAuth;
     private String mCurrentUserId;
+
     private FirebaseStorage mStorageImage;
 
     private Toolbar mToolbar;
@@ -118,37 +119,13 @@ public class BlogSingleActivity extends AppCompatActivity {
         mRecyclerViewComments.setLayoutManager(mLinearLayout);
         mRecyclerViewComments.setAdapter(mCommentAdapter);
 
+
+        // CARGANDO DATOS DEL POST
+        getPostData();
+
         // CARGANDO COMENTARIOS
         loadComments();
 
-        // CARGANDO DATOS DEL POST
-        databaseReferenceBlog.child(post_key).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String title = (String) dataSnapshot.child("title").getValue();
-                String description = (String) dataSnapshot.child("description").getValue();
-                mImageUri = (String) dataSnapshot.child("image").getValue();
-
-                String username = (String) dataSnapshot.child("username").getValue();
-                String user_uid = (String) dataSnapshot.child("uid").getValue();
-
-                textViewTitleBlogSingle.setText(title.toUpperCase());
-                textViewDescriptionBlogSingle.setText(description);
-                textViewUsernameBlogSingle.setText("By: " + username);
-                Picasso.with(BlogSingleActivity.this).load(mImageUri).placeholder(R.drawable.icon_comment).into(imageViewSingleBlog);
-
-                //Muestro el boton de elminar el post si el usuario fue el que lo creo
-                if(firebaseAuth.getCurrentUser().getUid().equals(user_uid)) {
-                    mImageButtonDeletePost.setVisibility(View.VISIBLE);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         // ELIMINANDO POST
         mImageButtonDeletePost.setOnClickListener(new View.OnClickListener() {
@@ -172,8 +149,51 @@ public class BlogSingleActivity extends AppCompatActivity {
 
     }
 
-    // Metodo que permite mostrar todos los comentarios desde firebase
+    /*
+     * METODO QUE PERMITE MOSTRAR TODOS LOS DATOS DEL POST
+     */
+    private void getPostData() {
 
+        databaseReferenceBlog.child(post_key).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists()) {
+
+                    String title = (String) dataSnapshot.child("title").getValue();
+                    String description = (String) dataSnapshot.child("description").getValue();
+                    mImageUri = (String) dataSnapshot.child("image").getValue();
+
+                    String username = (String) dataSnapshot.child("username").getValue();
+                    String user_uid = (String) dataSnapshot.child("uid").getValue();
+
+                    textViewTitleBlogSingle.setText(title.toUpperCase());
+                    textViewDescriptionBlogSingle.setText(description);
+                    textViewUsernameBlogSingle.setText(getResources().getString(R.string.by_text) + " " + username);
+                    Picasso.with(BlogSingleActivity.this).load(mImageUri).placeholder(R.drawable.icon_comment).into(imageViewSingleBlog);
+
+                    // MUESTRO EL BOTON DE ELIMINAR SI ES EL USUARIO QUE CREO EL POST
+                    if(mCurrentUserId.equals(user_uid)) {
+                        mImageButtonDeletePost.setVisibility(View.VISIBLE);
+                    }
+                }
+                else {
+                    Intent mainIntent = new Intent(BlogSingleActivity.this, MainActivity.class);
+                    startActivity(mainIntent);
+                    finish();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    // Metodo que permite mostrar todos los comentarios desde firebase
     private void loadComments() {
 
         mDatabaseComments.addChildEventListener(new ChildEventListener() {
@@ -263,10 +283,12 @@ public class BlogSingleActivity extends AppCompatActivity {
     }
 
     // Metodo que permite eliminar todos los datos del blog creado y su imagen almacenada en FirebaseStorage
-
+    // ELIMINAR IMAGEN POR URL
     private void deleteBlogPost() {
 
         if(mImageUri != null) {
+
+            //StorageReference photoRef = mStorageImage.getReferenceFromUrl(mImageUri);
 
             StorageReference photoRef = mStorageImage.getReferenceFromUrl(mImageUri);
 
@@ -274,17 +296,21 @@ public class BlogSingleActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Void aVoid) {
                     // File deleted successfully
-                    Log.d("BlogSingleActivity", "onSuccess: deleted file");
-                    databaseReferenceBlog.child(post_key).removeValue();
-                    Intent mainIntent = new Intent(BlogSingleActivity.this, MainActivity.class);
-                    startActivity(mainIntent);
-                    finish();
+                    databaseReferenceBlog.child(post_key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Intent mainIntent = new Intent(BlogSingleActivity.this, MainActivity.class);
+                            startActivity(mainIntent);
+                            finish();
+                        }
+                    });
+
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     // Uh-oh, an error occurred!
-                    Log.d("BlogSingleActivity", "onFailure: did not delete file");
+                    Toast.makeText(BlogSingleActivity.this, "Hubo un error al eliminar el post " + exception.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }

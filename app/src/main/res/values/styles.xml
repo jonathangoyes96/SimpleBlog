@@ -6,10 +6,54 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@android:color/black</item>
+
+    </style>
+
+    <style name="MyToolbar" parent="@style/ThemeOverlay.AppCompat">
+        <!-- Title text -->
+        <item name="android:textColorPrimary">@android:color/black</item>
+
+        <!-- Title color in AppCompat.Light  -->
+        <item name="android:textColorPrimaryInverse">@android:color/black</item>
+
+        <!-- Menu text-->
+        <item name="actionMenuTextColor">@android:color/black</item>
+        <!-- Overflow -->
+        <item name="android:textColorSecondary">@android:color/black</item>
+
+        <!-- background of the  -->
+        <!-- <item name="android:background">@color/color_primary</item> -->
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="RaisedButtonAccent" parent="Theme.AppCompat.Light">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorRed</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="RaisedButtonYellow" parent="Theme.AppCompat.Light">
+        <item name="colorButtonNormal">@color/colorPrimaryDark</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">15sp</item>
+
+    </style>
+
+    <style name="EditTextLightGray" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/colorLightGray</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColorPrimary">@color/colorLightGray</item>
+        <item name="colorAccent">@color/colorLightGray</item>
+        <item name="colorControlNormal">@color/colorLightGray</item>
+        <item name="colorControlActivated">@color/colorLightGray</item>
+    </style>
+
 
 </resources>

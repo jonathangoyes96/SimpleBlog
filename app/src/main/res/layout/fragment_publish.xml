@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activities.fragments.PublishFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/imageButtonPost"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:background="@color/colorDarkBlue"
+            app:srcCompat="@drawable/icon_upload_image"
+            />
+
+        <EditText
+            android:id="@+id/editTextTitlePost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/title_post_text"
+            android:background="@drawable/input_outline"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:inputType="textMultiLine"
+            android:padding="15dp"
+            />
+
+        <EditText
+            android:id="@+id/editTextDescriptionPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/post_description_text"
+            android:inputType="textMultiLine"
+            android:background="@drawable/input_outline"
+            android:padding="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            />
+        <Button
+            android:id="@+id/btnSubmitPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/upload_post_text"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@android:color/black"
+            />
+
+
+    </LinearLayout>
+
+</FrameLayout>

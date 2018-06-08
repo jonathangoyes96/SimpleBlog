@@ -3,6 +3,7 @@ package com.optic.simpleblog.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,6 +21,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -31,19 +33,30 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.optic.simpleblog.R;
+import com.optic.simpleblog.includes.Toolbar;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
 
     private static final String TAG = "LoginActivity";
+
+    // CONSTANTE GMAIL LOGIN
     private static final int RC_SIGN_IN = 1;
-    private EditText editTextEmail;
-    private EditText editTextPassword;
+
+    // VIEWS
+    private TextInputEditText editTextEmail;
+    private TextInputEditText editTextPassword;
     private Button btnLogin;
-    private Button btnCreateAccount;
+
+    // FIREBASE
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private DatabaseReference databaseReferenceUsers;
+
+    // PROGRESS DIALOG
     private ProgressDialog progressDialog;
 
     // GOOGLE SIGN IN
@@ -54,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Toolbar.showToolbar(this,"Ingreso", true);
 
         progressDialog = new ProgressDialog(this);
 
@@ -64,25 +78,16 @@ public class LoginActivity extends AppCompatActivity {
         databaseReferenceUsers.keepSynced(true);
 
         // VIEWS INSTANCE
-
         btnGoogleSignIn = (SignInButton) findViewById(R.id.btnGoogleSignIn);
-        editTextEmail = (EditText) findViewById(R.id.editTextEmailLogin);
-        editTextPassword = (EditText) findViewById(R.id.editTextPasswordLogin);
+        editTextEmail = (TextInputEditText) findViewById(R.id.editTextEmailLogin);
+        editTextPassword = (TextInputEditText) findViewById(R.id.editTextPasswordLogin);
         btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnCreateAccount = (Button) findViewById(R.id.btnCreateAccount);
 
+        // CLICK LOGIN
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 validateUserLoginInFirebase();
-            }
-        });
-
-        btnCreateAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(registerIntent);
             }
         });
 
@@ -154,8 +159,22 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            progressDialog.dismiss();
-                            checkUserExist();
+
+
+                            Map<String, Object> userMap = new HashMap<>();
+                            userMap.put("name", firebaseAuth.getCurrentUser().getDisplayName());
+                            userMap.put("email", firebaseAuth.getCurrentUser().getEmail());
+
+
+                            databaseReferenceUsers.child(firebaseAuth.getCurrentUser().getUid()).setValue(userMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    progressDialog.dismiss();
+                                    Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(mainIntent);
+                                    finish();
+                                }
+                            });
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -177,7 +196,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString().trim();
 
         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-            progressDialog.setMessage("Checking Login...");
+            progressDialog.setMessage(getResources().getString(R.string.verificating_login_text));
             progressDialog.show();
 
             firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -185,7 +204,12 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()) {
                         progressDialog.dismiss();
-                        checkUserExist();
+
+                        Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(mainIntent);
+                        finish();
+
+
                     }
                     else {
                         progressDialog.dismiss();
@@ -196,42 +220,5 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    /*
-     * Metodo que me permite verificar si el usuario que hizo login ya ha configurado sus datos de usuario en SetupActivity
-     */
-    private void checkUserExist() {
 
-        // Si el usuario ya ha hecho login correctamente entra en esta condicion
-        if (firebaseAuth.getCurrentUser() != null) {
-
-            // Obtengo el Uid del usuario que acaba de hacer login correctamente
-            final String user_id = firebaseAuth.getCurrentUser().getUid();
-
-            databaseReferenceUsers.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    // dataSnapshot hace referencia l Nodo de Users
-                    // Si ya se ha configurado los datos del usuario lo envio al mainActivity sino lo envio a SetupActivity
-                    // Con el fin de que configure sus datos de usuario tales como imagen y nombre
-                    if(dataSnapshot.hasChild(user_id)) {
-                        Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(mainIntent);
-                    }
-                    else {
-                        Intent setupIntent = new Intent(LoginActivity.this, SetupActivity.class);
-                        setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(setupIntent);
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }
-
-    }
 }

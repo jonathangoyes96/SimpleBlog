@@ -9,13 +9,27 @@
 
     <include layout="@layout/action_bar_toolbar" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewMain"
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="60dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+        />
 
-    </android.support.v7.widget.RecyclerView>
+
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="@android:color/black"
+        app:itemTextColor="@android:color/black"
+        android:layout_gravity="bottom"
+        app:menu="@menu/bottom_navigation_menu"/>
+
+
+
 
 </android.support.design.widget.CoordinatorLayout>

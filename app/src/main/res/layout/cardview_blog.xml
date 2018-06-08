@@ -26,21 +26,22 @@
             android:id="@+id/textViewTitleCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Post title goes here"
+            android:text="@string/title_post_text"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:textSize="18sp"
+            android:textColor="@android:color/black"
             />
 
         <TextView
             android:id="@+id/textViewUsernameCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="username"
+            android:text="@string/name_user_text"
             android:textStyle="italic"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorLightBrown"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             />
@@ -49,7 +50,7 @@
             android:id="@+id/textViewDescriptionCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="The post description goes here"
+            android:text="@string/post_description_text"
             android:textSize="15sp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
@@ -81,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:padding="15dp"
-                android:text="0 Me gusta"/>
+                android:text="@string/like_text"/>
 
         </RelativeLayout>
 

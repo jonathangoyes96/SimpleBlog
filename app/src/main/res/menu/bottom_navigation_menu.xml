@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/action_home"
+        android:icon="@mipmap/icon_home"
+        android:enabled="true"
+        android:title="@string/home_text" />
+
+    <item android:id="@+id/action_profile"
+        android:icon="@mipmap/icon_user"
+        android:enabled="true"
+        android:title="@string/profile_text" />
+
+    <item android:id="@+id/action_my_posts"
+        android:icon="@mipmap/icon_camera"
+        android:enabled="true"
+        android:title="@string/publish_text" />
+
+    <item android:id="@+id/action_upload"
+        android:icon="@mipmap/icon_upload"
+        android:enabled="true"
+        android:title="@string/posting_text" />
+
+
+
+
+</menu>

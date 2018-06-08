@@ -1,6 +1,9 @@
 package com.optic.simpleblog;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
@@ -11,7 +14,7 @@ import com.squareup.picasso.Picasso;
  * Created by User on 4/01/2018.
  */
 
-public class SimpleBlog extends Application {
+public class SimpleBlog extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,5 +28,11 @@ public class SimpleBlog extends Application {
         build.setIndicatorsEnabled(true);
         build.setLoggingEnabled(true);
         Picasso.setSingletonInstance(build);
+    }
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+        MultiDex.install(this);
     }
 }

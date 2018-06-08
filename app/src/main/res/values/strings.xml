@@ -1,5 +1,34 @@
 <resources>
-    <string name="app_name">SimpleBlog</string>
+    <string name="app_name">OpticBlog</string>
     <string name="transitionname_picture">transitionnamepicture</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="create_account_text">crear cuenta</string>
+    <string name="description_app_text">Diviertete con personas que tienen tus mismo gustos compartiendo post de tus videojuegos favoritos</string>
+    <string name="have_account_text">YA TENGO CUENTA</string>
+    <string name="share_with_friends_text">Comparte con amigos</string>
+    <string name="password_text">Contraseña</string>
+    <string name="email_text">Correo electronico</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edit_profile_text">Editar perfil</string>
+    <string name="like_text">Me gusta</string>
+    <string name="by_text">Por: </string>
+
+
+    <string name="name_user_text">Nombre de usuario</string>
+    <string name="profile_text">Perfil</string>
+    <string name="home_text">Home</string>
+    <string name="title_post_text">Titulo post</string>
+    <string name="upload_post_text">Subir post</string>
+    <string name="post_description_text">Descripcion</string>
+    <string name="new_post_text">Nuevo post</string>
+    <string name="comments_text">COMENTARIOS</string>
+    <string name="publish_text">Publicaciones</string>
+    <string name="posting_text">Postear</string>
+    <string name="edit_post_text">Editar post</string>
+    <string name="editing_post_text">Editando post...</string>
+    <string name="posting_blog_text">Publicando post...</string>
+    <string name="verificating_login_text">Verificando datos...</string>
+    <string name="logout_text">Salir</string>
 </resources>

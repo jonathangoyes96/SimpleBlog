@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,12 +29,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.optic.simpleblog.R;
+import com.optic.simpleblog.includes.Toolbar;
 import com.optic.simpleblog.utils.CompressorBitmapImage;
 import com.optic.simpleblog.utils.FileUtil;
 import com.optic.simpleblog.utils.RandomName;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PostActivity extends AppCompatActivity {
 
@@ -41,17 +45,20 @@ public class PostActivity extends AppCompatActivity {
     private Button btnSubmit;
     private EditText editTextTitle;
     private EditText editTextDescription;
+
+    // FIREBASE
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+    private String mCurrentUserId;
     private StorageReference storageReference;
     private DatabaseReference databaseReferenceBlog;
     private DatabaseReference databaseReferenceUsers;
     private ProgressDialog progressDialog;
-    private static final int GALLERY_REQUEST = 1;
+
     // COMPRESION DE IMAGENES
     private Uri mImageUri;
+    private static final int GALLERY_REQUEST = 1;
     private File actualImage;
-    private File compressedImage;
 
 
 
@@ -59,9 +66,13 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        Toolbar.showToolbar(this, getResources().getString(R.string.new_post_text), true);
 
+
+        // FIREBASE
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+        mCurrentUserId = firebaseAuth.getCurrentUser().getUid();
 
         storageReference = FirebaseStorage.getInstance().getReference();
         // Creando un nodo en la base de datos llamado Blog donde se almacenara los datos del Post
@@ -88,73 +99,102 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Guardar en firebase
-                startPosting();
+                savePostInfo();
             }
         });
     }
 
     /*
-     * Metodo que permite guardar los datos del post en firebase
+     * METODO QUE ALMACENA LA INFORMACION DEL POST EN DATABASE
      */
-    private void startPosting() {
+    private void savePostInfo() {
+
 
         progressDialog.setMessage("Posting to blog...");
+        progressDialog.show();
 
 
-        final String title = editTextTitle.getText().toString().trim();
-        final String description = editTextDescription.getText().toString().trim();
+        final String title = editTextTitle.getText().toString();
+        final String description = editTextDescription.getText().toString();
 
         if(!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description) && actualImage != null) {
-            progressDialog.show();
 
-            // COMPRIMIENDO LA IMAGEN Y TRANFORMANDOLA A BITMAP
-            byte[] thumb_image = CompressorBitmapImage.getBitmapImageCompress(this, actualImage.getPath(), 300,300);
-
-            StorageReference thumb_filepath = storageReference.child("Blog_Images").child(RandomName.randomName() + ".jpg");
-
-            UploadTask uploadTask = thumb_filepath.putBytes(thumb_image);
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            // ALMACENO DATOS DEL POSTS Y EL USERNAME DEL USUARIO QUE LO CREO
+            databaseReferenceUsers.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // taskSnapshot.getDownloadUrl() permite obtener la url de la imagen que se acaba de subir al storage de firebase
-                    final Uri downloadUri = taskSnapshot.getDownloadUrl();
-                    final DatabaseReference newPost = databaseReferenceBlog.push();
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    // Almacenando los datos del blog y el usuario que creo dicho Post
+                    final DatabaseReference newPostReference = databaseReferenceBlog.push();
 
-                    databaseReferenceUsers.addValueEventListener(new ValueEventListener() {
+                    final String post_id = newPostReference.getKey();
+                    String username = dataSnapshot.child("name").getValue().toString();
+
+                    Map<String, Object> postMap = new HashMap<>();
+                    postMap.put("title", title);
+                    postMap.put("description", description);
+                    postMap.put("uid", mCurrentUserId);
+                    postMap.put("timestamp", ServerValue.TIMESTAMP);
+                    postMap.put("username", username);
+
+                    newPostReference.setValue(postMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                            // DataSnapshot hace referencia al nodo principal del UID del usuario en firebase database
-                            newPost.child("title").setValue(title);
-                            newPost.child("description").setValue(description);
-                            newPost.child("image").setValue(downloadUri.toString());
-                            newPost.child("uid").setValue(firebaseUser.getUid());
-                            newPost.child("timestamp").setValue(ServerValue.TIMESTAMP);
-                            newPost.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()) {
-                                        startActivity(new Intent(PostActivity.this, MainActivity.class));
-                                    }
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
+                        public void onSuccess(Void aVoid) {
+                            // ALMACENANDO LA IMAGEN DEL POST
+                            saveImagePost(post_id);
                         }
                     });
 
-                    progressDialog.dismiss();
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
                 }
             });
 
         }
+        else {
+            Toast.makeText(PostActivity.this, "Todos los campos son requeridos", Toast.LENGTH_SHORT).show();
+
+        }
     }
+
+    /*
+     * ALMACENAR LA IMAGEN DEL POST EN FIREBASE STORAGE
+     */
+    private void saveImagePost(final String post_id) {
+
+        // COMPRIMIENDO LA IMAGEN Y TRANFORMANDOLA A BITMAP
+        byte[] thumb_image = CompressorBitmapImage.getBitmapImageCompress(this, actualImage.getPath(), 300,300);
+
+        StorageReference thumb_filepath = storageReference.child("Blog_Images").child(post_id + ".jpg");
+
+        UploadTask uploadTask = thumb_filepath.putBytes(thumb_image);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                // ALMACENANDO LA URL DE LA IMAGEN EN DATABASE
+                final String imageUri = taskSnapshot.getDownloadUrl().toString();
+
+                Map<String, Object> imageMap = new HashMap<>();
+                imageMap.put("image", imageUri);
+
+                final DatabaseReference newPostReference = databaseReferenceBlog.child(post_id);
+                newPostReference.updateChildren(imageMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        progressDialog.dismiss();
+                        startActivity(new Intent(PostActivity.this, MainActivity.class));
+                    }
+                });
+
+            }
+        });
+
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

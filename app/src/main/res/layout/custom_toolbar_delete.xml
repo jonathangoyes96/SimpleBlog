@@ -5,13 +5,13 @@
 
     <ImageButton
         android:id="@+id/imageButtonDeletePost"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:visibility="invisible"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:background="#00FFFFFF"
-        android:src="@drawable/icon_trash"
+        android:src="@mipmap/icon_remove"
 
         />
 

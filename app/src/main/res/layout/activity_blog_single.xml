@@ -39,6 +39,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:theme="@style/MyToolbar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin"
                 />
@@ -66,12 +67,13 @@
                 android:id="@+id/textViewTitleBlogSingle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Post title goes here"
+                android:text="@string/title_post_text"
                 android:paddingRight="15dp"
                 android:paddingLeft="15dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="10dp"
                 android:textSize="20sp"
+                android:textColor="@android:color/black"
                 />
 
 
@@ -79,10 +81,10 @@
                 android:id="@+id/textViewUsernameBlogSingle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="username"
+                android:text="@string/name_user_text"
                 android:textSize="15sp"
                 android:textStyle="italic"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorLightBrown"
                 android:paddingRight="15dp"
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp"
@@ -93,7 +95,7 @@
                 android:id="@+id/textViewDescriptionBlogSingle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description Post..."
+                android:text="@string/post_description_text"
                 android:textSize="15sp"
                 android:paddingTop="5dp"
                 android:paddingBottom="15dp"
@@ -108,7 +110,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="COMENTARIOS"
+                android:text="@string/comments_text"
                 android:textSize="20sp"
                 android:layout_marginTop="20dp"
                 android:padding="10dp"/>
