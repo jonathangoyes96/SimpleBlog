@@ -110,6 +110,8 @@ public class LoginActivity extends AppCompatActivity {
         .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
         .build();
 
+        mGoogleApiClient.connect();
+
         btnGoogleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            progressDialog.setMessage("Starting sign in...");
+            progressDialog.setMessage(getResources().getString(R.string.user_register_text) + "...");
             progressDialog.show();
 
             if (result.isSuccess()) {
@@ -150,7 +152,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         firebaseAuth.signInWithCredential(credential)
@@ -213,7 +214,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     else {
                         progressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT);
+                        Toast.makeText(LoginActivity.this, R.string.login_fail_text, Toast.LENGTH_SHORT);
                     }
                 }
             });

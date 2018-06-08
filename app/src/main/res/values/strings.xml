@@ -8,14 +8,10 @@
     <string name="share_with_friends_text">Comparte con amigos</string>
     <string name="password_text">Contraseña</string>
     <string name="email_text">Correo electronico</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_profile_text">Editar perfil</string>
     <string name="like_text">Me gusta</string>
     <string name="by_text">Por: </string>
-
-
     <string name="name_user_text">Nombre de usuario</string>
     <string name="profile_text">Perfil</string>
     <string name="home_text">Home</string>
@@ -31,4 +27,6 @@
     <string name="posting_blog_text">Publicando post...</string>
     <string name="verificating_login_text">Verificando datos...</string>
     <string name="logout_text">Salir</string>
+    <string name="user_register_text">Registro de usuario</string>
+    <string name="login_fail_text">El email o contraseña son incorrectos</string>
 </resources>

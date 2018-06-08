@@ -24,4 +24,6 @@
     <string name="posting_blog_text">Publish post...</string>
     <string name="verificating_login_text">Checking data...</string>
     <string name="logout_text">Logout</string>
+    <string name="user_register_text">Sign In</string>
+    <string name="login_fail_text">Email or password are incorrect</string>
 </resources>
